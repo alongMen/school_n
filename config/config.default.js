@@ -33,9 +33,15 @@ module.exports = appInfo => {
     csrf:{
       enable:false
     },
-    domainWhiteList:['http://localhost:8000']
+    domainWhiteList:['http://localhost:8000','http://localhost:8080']
   }
   config.jwtSecret='yryr'
+  config.baseDir = ''
+  config.multipart = {
+    fileSize: '50mb',
+    mode: 'stream',
+    fileExtensions: ['.xlsx', '.txt'], // 扩展几种上传的文件格式
+  };
 
   config.mysql = {
     // 单数据库信息配置

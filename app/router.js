@@ -27,4 +27,6 @@ module.exports = app => {
 
   router.resources('report','/api/report',controller.report);
   router.get('report','/api/report/:stuNum',controller.report.getReport);
+
+  router.post('/api/report/import',controller.report.import)
 };
