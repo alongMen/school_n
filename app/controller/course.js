@@ -16,13 +16,13 @@ const dayjs = require('dayjs');
 class Controller extends BaseController {
     constructor(...args) {
         super(...args);
-        this.entity = "report"
+        this.entity = "course"
     }
-    async getReport() {
+    async getCourse() {
         const { ctx, service } = this
-        const stuNum = ctx.params.stuNum;
-        const report = await ctx.service.report.getReport(stuNum);
-        ctx.body = report;
+        const classnum = ctx.params.classnum;
+        const course = await ctx.service.course.getCourse(classnum);
+        ctx.body = course;
     }
     async import() {
         const { ctx } = this;
@@ -68,7 +68,7 @@ class Controller extends BaseController {
         const sheet = workbook.Sheets[sheetNames[0]]; //通过表名得到表对象
         const thead = [sheet.A1.v, sheet.B1.v, sheet.C1.v, sheet.D1.v, sheet.E1.v, sheet.F1.v, sheet.G1.v, sheet.H1.v, sheet.I1.v, sheet.J1.v, sheet.K1.v, sheet.L1.v, sheet.M1.v, sheet.N1.v, sheet.O1.v];
         const data = xlsx.utils.sheet_to_json(sheet); //通过工具将表对象的数据读出来并转成json
-        const theadRule = ['班级','学号', '姓名', '语文', '数学', '英语', '物理', '化学', '生物', '历史', '地理', '体育', '信息技术', '总分', '排名'];
+        const theadRule = ['时间','周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四'];
         const isValid = thead.every((value, index) => value === theadRule[index]);
         if (!isValid) {
             ctx.failure('上传的excel格式错误');
@@ -78,26 +78,24 @@ class Controller extends BaseController {
         const result = [];
         for (let i = 0; i < data.length; i++) {
             result.push({
-                class:data[i][thead[0]],
-                stuNum: data[i][thead[1]],
-                name: data[i][thead[2]],
-                chinese: data[i][thead[3]],
-                math: data[i][thead[4]],
-                english: data[i][thead[5]],
-                physics: data[i][thead[6]],
-                chemistry: data[i][thead[7]],
-                biology: data[i][thead[8]],
-                geography: data[i][thead[9]],
-                history: data[i][thead[10]],
-                sports: data[i][thead[11]],
-                technology: data[i][thead[12]],
-                totalScore: data[i][thead[13]],
-                ranking: data[i][thead[14]],
+                date:data[i][thead[0]],
+                dayone: data[i][thead[1]],
+                daytwo: data[i][thead[2]],
+                daythree: data[i][thead[3]],
+                dayfour: data[i][thead[4]],
+                dayfive: data[i][thead[5]],
+                daysix: data[i][thead[6]],
+                dayseven: data[i][thead[7]],
+                daydayone: data[i][thead[8]],
+                daydaytwo: data[i][thead[9]],
+                daydaythree: data[i][thead[10]],
+                daydayfour: data[i][thead[11]],
+                classnum: data[i][thead[12]]
             });
         }
 
-        const res = await ctx.service.report.import(result);
-        console.log(res)
+        const res = await ctx.service.course.import(result);
+        // console.log(res)
         if(res){
             ctx.body={data:'导入成功！'}
         }else{

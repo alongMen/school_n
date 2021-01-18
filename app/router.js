@@ -27,6 +27,9 @@ module.exports = app => {
 
   router.resources('report','/api/report',controller.report);
   router.get('report','/api/report/:stuNum',controller.report.getReport);
+  router.post('/api/report/import',controller.report.import);
 
-  router.post('/api/report/import',controller.report.import)
+  router.resources('course','/api/course',controller.course);
+  router.get('course','/api/course/:classnum',controller.course.getCourse);
+  router.post('/api/course/import',controller.course.import);
 };
