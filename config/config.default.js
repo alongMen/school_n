@@ -35,6 +35,7 @@ module.exports = appInfo => {
     },
     domainWhiteList:['http://localhost:8000','http://localhost:8080']
   }
+  config.auth={}
   config.jwtSecret='yryr'
   config.baseDir = ''
   config.multipart = {

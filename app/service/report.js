@@ -14,6 +14,13 @@ class Service extends BaseService {
         data:result
     };
   } 
+  async getReportAll(classRoom){
+    const result = await this.app.mysql.query(`SELECT * FROM report WHERE class=${classRoom} order by totalScore desc`);
+    return { 
+        code:200,
+        data:result
+    };
+  } 
   async import(result){
     const values = [];
     result.forEach(function(n) {

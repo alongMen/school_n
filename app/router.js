@@ -4,7 +4,8 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-  const { router, controller } = app;
+  const { router, controller,middleware } = app;
+  let auth = middleware.auth(app.config.auth,app);
 
   router.post('/signup', controller.user.signup);//注册
   router.post('/signin', controller.user.signin);//登录
@@ -25,9 +26,12 @@ module.exports = app => {
   router.get('/api/captcha',controller.user.captcha);
   router.post('/api/checkCaptcha',controller.user.checkCaptcha);
 
-  router.resources('report','/api/report',controller.report);
+  // router.resources('report','/api/report',auth,controller.report);
+  // router.resources('report','/api/report',controller.report);
+  // router.resources('report','/api/report',auth,controller.report);
   router.get('report','/api/report/:stuNum',controller.report.getReport);
-  router.post('/api/report/import',controller.report.import);
+  router.get('report','/api/report/all/:classRoom',controller.report.getReportAll);
+  // router.post('/api/report/import',controller.report.import);
 
   router.resources('course','/api/course',controller.course);
   router.get('course','/api/course/:classnum',controller.course.getCourse);

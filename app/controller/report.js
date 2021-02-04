@@ -24,6 +24,12 @@ class Controller extends BaseController {
         const report = await ctx.service.report.getReport(stuNum);
         ctx.body = report;
     }
+    async getReportAll() {
+        const { ctx, service } = this
+        const classRoom = ctx.params.classRoom;
+        const report = await ctx.service.report.getReportAll(classRoom);
+        ctx.body = report;
+    }
     async import() {
         const { ctx } = this;
         const stream = await this.ctx.getFileStream();
